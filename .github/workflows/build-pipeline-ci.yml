@@ -5,9 +5,6 @@ on:
     branches: [main]
     tags:
       - 'v*'
-  pull_request:
-    tags:
-      - 'v*'
 
 jobs:
   build:
@@ -15,12 +12,12 @@ jobs:
     steps:
       - name: Code Checkout
         uses: actions/checkout@v4.1.1
-        
+
       - name: Node Install
         uses: actions/setup-node@v4.0.1
         with:
-          node-version: '20.x' 
-          
+          node-version: '20.x'
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v2.4.0
         with:
@@ -29,37 +26,43 @@ jobs:
 
       - name: Dependencies Install
         run: pnpm install --frozen-lockfile
-          
+
       - name: Code Lint
         run: pnpm run lint
-        
+
       - name: Code Type Check
         run: pnpm run type-check
-        
+
       - name: Code Spell Check
         run: pnpm run spell-check
-        
+
       - name: Unit Test
         run: pnpm run test:unit
 
       - name: Build
         run: pnpm run build
-        
-  image-build:
+
+  build-deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Code Checkout
         uses: actions/checkout@v4.1.1
-        
+
       - name: Node Install
         uses: actions/setup-node@v4.0.1
         with:
-          node-version: '20.x' 
-          
+          node-version: '20.x'
+
       - name: Docker Image Push
-        run:
-          | 
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker build . --file Dockerfile --tag ${{ secrets.DOCKER_REPOSITORY }}:latest
           docker push ${{ secrets.DOCKER_REPOSITORY }}:latest
-        
+
+      - name: Docker Deploy
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker rmi ${{ secrets.DOCKER_REPOSITORY }}:latest
+          docker pull ${{ secrets.DOCKER_REPOSITORY }}:latest
+          docker run -rm -d -p ${{ vars.DOCKER_DEPLOY_PORT }}:${{ vars.DOCKER_DEPLOY_EXPOSE_PORT }} --name ${{ secrets.DOCKER_REPOSITORY }}-container ${{ secrets.DOCKER_REPOSITORY }}

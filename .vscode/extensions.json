@@ -13,6 +13,7 @@
     "hollowtree.vue-snippets",
     "vue.vscode-typescript-vue-plugin",
     "eamodio.gitlens",
-    "william-voyek.vscode-nginx"
+    "william-voyek.vscode-nginx",
+    "github.vscode-github-actions"
   ]
 }
