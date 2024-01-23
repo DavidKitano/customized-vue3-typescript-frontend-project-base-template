@@ -3,9 +3,7 @@ FROM node:20.11.0 as builder
 WORKDIR /src
 COPY ./ /src
 
-RUN npm install -g pnpm \
-    && pnpm install --frozen-lockfile \
-    && pnpm build
+RUN pnpm build
 
 FROM nginx:alpine-slim
 

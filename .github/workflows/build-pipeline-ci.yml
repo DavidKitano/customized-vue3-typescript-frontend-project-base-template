@@ -2,7 +2,6 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [main]
     tags:
       - 'v*'
 
@@ -30,11 +29,11 @@ jobs:
       - name: Code Lint
         run: pnpm run lint
 
-      - name: Code Type Check
-        run: pnpm run type-check
-
       - name: Code Spell Check
         run: pnpm run spell-check
+
+      - name: Code Type Check
+        run: pnpm run type-check
 
       - name: Unit Test
         run: pnpm run test:unit
@@ -54,15 +53,17 @@ jobs:
         with:
           node-version: '20.x'
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.4.0
+        with:
+          version: latest
+          run_install: false
+
+      - name: Dependencies Install
+        run: pnpm install --frozen-lockfile
+
       - name: Docker Image Push
         run: |
           echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
           docker build . --file Dockerfile --tag ${{ secrets.DOCKER_REPOSITORY }}:latest
           docker push ${{ secrets.DOCKER_REPOSITORY }}:latest
-
-      - name: Docker Deploy
-        run: |
-          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-          docker rmi ${{ secrets.DOCKER_REPOSITORY }}:latest
-          docker pull ${{ secrets.DOCKER_REPOSITORY }}:latest
-          docker run -d -p ${{ vars.DOCKER_DEPLOY_PORT }}:${{ vars.DOCKER_DEPLOY_EXPOSE_PORT }} --name ${{ secrets.DOCKER_REPOSITORY_CONTAINER }} ${{ secrets.DOCKER_REPOSITORY }}
