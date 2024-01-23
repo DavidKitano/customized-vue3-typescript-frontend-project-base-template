@@ -52,6 +52,9 @@ devDependencies:
   '@commitlint/config-conventional':
     specifier: ^18.5.0
     version: 18.5.0
+  '@commitlint/types':
+    specifier: ^18.4.4
+    version: 18.4.4
   '@iconify/json':
     specifier: ^2.2.172
     version: 2.2.172

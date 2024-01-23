@@ -40,6 +40,7 @@
   "devDependencies": {
     "@commitlint/cli": "^18.5.0",
     "@commitlint/config-conventional": "^18.5.0",
+    "@commitlint/types": "^18.4.4",
     "@iconify/json": "^2.2.172",
     "@rushstack/eslint-patch": "^1.7.0",
     "@tsconfig/node18": "^18.2.2",
