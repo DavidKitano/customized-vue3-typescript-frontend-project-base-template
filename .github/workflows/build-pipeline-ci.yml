@@ -3,22 +3,28 @@ name: CI Pipeline
 on: [push, pull_request]
 
 jobs:
-  install:
+  Install:
     runs-on: ubuntu-latest
     container: node:20
+    strategy:
+      matrix:
+        node-version: [20]
     steps:
       - uses: actions/checkout@v2
       - name: Install Dependencies
         run: |
-          npm ci
+          pnpm i --frozen-lockfile
           echo -e '------------------------------------------'
           echo -e 'Successfully installed:'
-          npm list
-          npm list -g
+          pnpm list
+          pnpm list -g
           echo -e '\n\n------------------------------------------'
           echo 'success'
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
 
-  lint:
+  Lint:
     runs-on: ubuntu-latest
     container: node:20
     steps:
@@ -27,13 +33,13 @@ jobs:
         run: |
           echo -e '------------------------------------------'
           echo -e 'With installed:'
-          npm list
-          npm list -g
+          pnpm list
+          pnpm list -g
           echo -e '------------------------------------------'
-          npm run lint
+          pnpm run lint
           echo 'success'
 
-  spell-check:
+  Code-Check:
     runs-on: ubuntu-latest
     container: node:20
     steps:
@@ -42,32 +48,21 @@ jobs:
         run: |
           echo -e '------------------------------------------'
           echo -e 'With installed:'
-          npm list
-          npm list -g
+          pnpm list
+          pnpm list -g
           echo -e '------------------------------------------'
-          npm run spell-check
-          echo 'success'
-
-  type-check:
-    runs-on: ubuntu-latest
-    container: node:20
-    steps:
-      - uses: actions/checkout@v2
+          pnpm run spell-check
+          echo 'spell check success'
       - name: Type Check
         run: |
-          echo -e '------------------------------------------'
-          echo -e 'With installed:'
-          npm list
-          npm list -g
-          echo -e '------------------------------------------'
-          npm run type-check
-          echo 'success'
+          pnpm run type-check
+          echo 'type check success'
 
-  build:
+  Build:
     runs-on: ubuntu-latest
     container: node:20
     steps:
       - uses: actions/checkout@v2
       - name: Build
         run: |
-          npm run build-only
+          pnpm run build-only
