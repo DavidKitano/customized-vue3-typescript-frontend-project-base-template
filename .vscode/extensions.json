@@ -12,6 +12,7 @@
     "vue.volar",
     "hollowtree.vue-snippets",
     "vue.vscode-typescript-vue-plugin",
-    "eamodio.gitlens"
+    "eamodio.gitlens",
+    "william-voyek.vscode-nginx"
   ]
 }
