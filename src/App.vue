@@ -1,24 +1,40 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from '@/components/common/hello-world.vue'
-</script>
-
 <template>
   <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg?image" width="125" height="125" />
+    <Suspense>
+      <div class="wrapper">
+        <hello-world :msg="`当前版本:${version}`" />
 
-    <div class="wrapper">
-      <hello-world msg="You did it!" />
-
-      <nav>
-        <router-link to="/">Home</router-link>
-        <router-link to="/about">About</router-link>
-      </nav>
-    </div>
+        <nav>
+          <router-link to="/">Home</router-link>
+          <router-link to="/about">About</router-link>
+        </nav>
+      </div>
+      <template #fallback>
+        <div>Loading...</div>
+      </template>
+    </Suspense>
   </header>
 
   <router-view />
 </template>
+<script setup lang="ts">
+import { RouterLink, RouterView } from 'vue-router'
+import HelloWorld from '@/components/common/hello-world.vue'
+
+type Version = {
+  version: number
+}
+
+const version = ref<Date>()
+
+const fetchVersionFile = () => {
+  fetch('/version.json')
+    .then((res) => res.json())
+    .then((data: Version) => (version.value = new Date(data.version))) // 假设 'version.json' 在服务器的根目录
+}
+fetchVersionFile()
+</script>
 
 <style lang="scss" scoped>
 header {
