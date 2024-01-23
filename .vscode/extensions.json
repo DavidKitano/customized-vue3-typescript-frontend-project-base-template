@@ -1,0 +1,17 @@
+{
+  "recommendations": [
+    "streetsidesoftware.code-spell-checker",
+    "kamikillerto.vscode-colorize",
+    "dbaeumer.vscode-eslint",
+    "christian-kohler.npm-intellisense",
+    "christian-kohler.path-intellisense",
+    "esbenp.prettier-vscode",
+    "rvest.vs-code-prettier-eslint",
+    "wayou.vscode-todo-highlight",
+    "redhat.vscode-yaml",
+    "vue.volar",
+    "hollowtree.vue-snippets",
+    "vue.vscode-typescript-vue-plugin",
+    "eamodio.gitlens"
+  ]
+}

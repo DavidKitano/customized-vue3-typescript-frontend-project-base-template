@@ -1,0 +1,9 @@
+.husky/*
+.vscode/*
+dist/*
+node_modules/*
+public/*
+.gitignore
+auto-imports.d.ts
+components.d.ts
+pnpm-lock.yaml
