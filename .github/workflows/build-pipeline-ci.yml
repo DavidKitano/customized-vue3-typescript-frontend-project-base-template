@@ -1,68 +1,26 @@
 name: CI Pipeline
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ main ]
 
 jobs:
-  Install:
+  build:
     runs-on: ubuntu-latest
-    container: node:20
-    strategy:
-      matrix:
-        node-version: [20]
     steps:
-      - uses: actions/checkout@v2
+      - name: Code Checkout
+        uses: actions/checkout@v2
+      - name: Node Install
+        uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-      - name: Install Dependencies
-        run: |
-          pnpm i --frozen-lockfile
-          echo -e '------------------------------------------'
-          echo -e 'Successfully installed:'
-          pnpm list
-          pnpm list -g
-          echo -e '\n\n------------------------------------------'
-          echo 'success'
-
-  Lint:
-    runs-on: ubuntu-latest
-    container: node:20
-    steps:
-      - uses: actions/checkout@v2
-      - name: Lint
-        run: |
-          echo -e '------------------------------------------'
-          echo -e 'With installed:'
-          pnpm list
-          pnpm list -g
-          echo -e '------------------------------------------'
-          pnpm run lint
-          echo 'success'
-
-  Code-Check:
-    runs-on: ubuntu-latest
-    container: node:20
-    steps:
-      - uses: actions/checkout@v2
-      - name: Spell Check
-        run: |
-          echo -e '------------------------------------------'
-          echo -e 'With installed:'
-          pnpm list
-          pnpm list -g
-          echo -e '------------------------------------------'
-          pnpm run spell-check
-          echo 'spell check success'
-      - name: Type Check
-        run: |
-          pnpm run type-check
-          echo 'type check success'
-
-  Build:
-    runs-on: ubuntu-latest
-    container: node:20
-    steps:
-      - uses: actions/checkout@v2
+          node-version: '20.x' 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.4.0
+      - name: Code Lint
+        run: pnpm run lint
+      - name: Code Type Check
+        run: pnpm run type-check
+      - name: Code Spell Check
+        run: pnpm run spell-check
       - name: Build
-        run: |
-          pnpm run build-only
+        run: pnpm run build
