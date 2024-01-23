@@ -1,0 +1,73 @@
+name: CI Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    container: node:20
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: |
+          npm ci
+          echo -e '------------------------------------------'
+          echo -e 'Successfully installed:'
+          npm list
+          npm list -g
+          echo -e '\n\n------------------------------------------'
+          echo 'success'
+
+  lint:
+    runs-on: ubuntu-latest
+    container: node:20
+    steps:
+      - uses: actions/checkout@v2
+      - name: Lint
+        run: |
+          echo -e '------------------------------------------'
+          echo -e 'With installed:'
+          npm list
+          npm list -g
+          echo -e '------------------------------------------'
+          npm run lint
+          echo 'success'
+
+  spell-check:
+    runs-on: ubuntu-latest
+    container: node:20
+    steps:
+      - uses: actions/checkout@v2
+      - name: Spell Check
+        run: |
+          echo -e '------------------------------------------'
+          echo -e 'With installed:'
+          npm list
+          npm list -g
+          echo -e '------------------------------------------'
+          npm run spell-check
+          echo 'success'
+
+  type-check:
+    runs-on: ubuntu-latest
+    container: node:20
+    steps:
+      - uses: actions/checkout@v2
+      - name: Type Check
+        run: |
+          echo -e '------------------------------------------'
+          echo -e 'With installed:'
+          npm list
+          npm list -g
+          echo -e '------------------------------------------'
+          npm run type-check
+          echo 'success'
+
+  build:
+    runs-on: ubuntu-latest
+    container: node:20
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build
+        run: |
+          npm run build-only
