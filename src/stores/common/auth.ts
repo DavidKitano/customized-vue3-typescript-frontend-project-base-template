@@ -1,5 +1,3 @@
-import { ref } from 'vue'
-
 const auth = ref({
   hasLogin: false,
   name: ''

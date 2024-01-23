@@ -17,25 +17,25 @@ const pathSrc = path.resolve(__dirname, 'src')
 export default defineConfig({
   plugins: [
     vue(),
-    vueJsx(),     
+    vueJsx(),
     AutoImport({
       imports: ['vue'],
       resolvers: [
         ElementPlusResolver(),
         IconsResolver({
-          prefix: 'Icon',
+          prefix: 'Icon'
         })
       ],
-      dts: path.resolve(pathSrc, 'auto-imports.d.ts'),
+      dts: path.resolve(pathSrc, 'auto-imports.d.ts')
     }),
     Components({
       resolvers: [
         ElementPlusResolver(),
         IconsResolver({
-          enabledCollections: ['ep'],
+          enabledCollections: ['ep']
         })
       ],
-      dts: path.resolve(pathSrc, 'components.d.ts'),
+      dts: path.resolve(pathSrc, 'components.d.ts')
     }),
     Icons({
       autoInstall: true,

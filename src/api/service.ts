@@ -64,7 +64,7 @@ let redirectTimer: any = 0
 
 api.interceptors.request.use((config: any) => {
   // 无需登录态的接口
-  if (['/login'].indexOf(config.url as string) !== -1 || auth.hasLogin) {
+  if (['/login'].indexOf(config.url as string) !== -1 || auth.value.hasLogin) {
     return config
   }
 
