@@ -1,27 +1,27 @@
 <script setup lang="ts">
-import WelcomeItem from './WelcomeItem.vue'
-import DocumentationIcon from './icons/IconDocumentation.vue'
-import ToolingIcon from './icons/IconTooling.vue'
-import EcosystemIcon from './icons/IconEcosystem.vue'
-import CommunityIcon from './icons/IconCommunity.vue'
-import SupportIcon from './icons/IconSupport.vue'
+import WelcomeItem from './welcome-item.vue'
+import DocumentationIcon from '@/components/icons/icon-documentation.vue'
+import ToolingIcon from '@/components/icons/icon-tooling.vue'
+import EcosystemIcon from '@/components/icons/icon-ecosystem.vue'
+import CommunityIcon from '@/components/icons/icon-community.vue'
+import SupportIcon from '@/components/icons/icon-support.vue'
 </script>
 
 <template>
-  <WelcomeItem>
+  <welcome-item>
     <template #icon>
-      <DocumentationIcon />
+      <documentation-icon />
     </template>
     <template #heading>Documentation</template>
 
     Vue’s
     <a href="https://vuejs.org/" target="_blank" rel="noopener">official documentation</a>
     provides you with all information you need to get started.
-  </WelcomeItem>
+  </welcome-item>
 
-  <WelcomeItem>
+  <welcome-item>
     <template #icon>
-      <ToolingIcon />
+      <tooling-icon />
     </template>
     <template #heading>Tooling</template>
 
@@ -35,11 +35,11 @@ import SupportIcon from './icons/IconSupport.vue'
     <br />
 
     More instructions are available in <code>README.md</code>.
-  </WelcomeItem>
+  </welcome-item>
 
-  <WelcomeItem>
+  <welcome-item>
     <template #icon>
-      <EcosystemIcon />
+      <ecosystem-icon />
     </template>
     <template #heading>Ecosystem</template>
 
@@ -51,11 +51,11 @@ import SupportIcon from './icons/IconSupport.vue'
     resources, we suggest paying
     <a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">Awesome Vue</a>
     a visit.
-  </WelcomeItem>
+  </welcome-item>
 
-  <WelcomeItem>
+  <welcome-item>
     <template #icon>
-      <CommunityIcon />
+      <community-icon />
     </template>
     <template #heading>Community</template>
 
@@ -66,15 +66,15 @@ import SupportIcon from './icons/IconSupport.vue'
     follow the official
     <a href="https://twitter.com/vuejs" target="_blank" rel="noopener">@vuejs</a>
     twitter account for latest news in the Vue world.
-  </WelcomeItem>
+  </welcome-item>
 
-  <WelcomeItem>
+  <welcome-item>
     <template #icon>
-      <SupportIcon />
+      <support-icon />
     </template>
     <template #heading>Support Vue</template>
 
     As an independent project, Vue relies on community backing for its sustainability. You can help us by
     <a href="https://vuejs.org/sponsor/" target="_blank" rel="noopener">becoming a sponsor</a>.
-  </WelcomeItem>
+  </welcome-item>
 </template>
