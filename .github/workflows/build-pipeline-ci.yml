@@ -34,5 +34,8 @@ jobs:
       - name: Code Spell Check
         run: pnpm run spell-check
         
+      - name: Unit Test
+        run: pnpm run test:unit
+        
       - name: Build
         run: pnpm run build
