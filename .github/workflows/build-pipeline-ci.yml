@@ -2,6 +2,7 @@ name: CI Pipeline
 
 on:
   push:
+    branches: [main]
     tags:
       - 'v*'
   pull_request:
@@ -43,3 +44,22 @@ jobs:
 
       - name: Build
         run: pnpm run build
+        
+  image-build:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v4.1.1
+        
+      - name: Node Install
+        uses: actions/setup-node@v4.0.1
+        with:
+          node-version: '20.x' 
+          
+      - name: Docker Image Push
+        run:
+          | 
+          docker build . --file Dockerfile --tag ${{ secrets.DOCKER_REPOSITORY }}:latest
+          docker push ${{ secrets.DOCKER_REPOSITORY }}:latest
+        
