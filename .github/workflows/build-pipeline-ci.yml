@@ -11,6 +11,9 @@ jobs:
         node-version: [20]
     steps:
       - uses: actions/checkout@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
       - name: Install Dependencies
         run: |
           pnpm i --frozen-lockfile
@@ -20,9 +23,6 @@ jobs:
           pnpm list -g
           echo -e '\n\n------------------------------------------'
           echo 'success'
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
 
   Lint:
     runs-on: ubuntu-latest
