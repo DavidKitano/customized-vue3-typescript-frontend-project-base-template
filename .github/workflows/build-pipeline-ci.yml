@@ -13,10 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Code Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4.1.1
         
       - name: Node Install
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4.0.1
         with:
           node-version: '20.x' 
           
