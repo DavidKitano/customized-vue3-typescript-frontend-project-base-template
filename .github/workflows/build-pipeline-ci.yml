@@ -8,7 +8,7 @@ on:
       - 'v*'
 
 jobs:
-  prior-build:
+  Prior_Build:
     runs-on: ubuntu-latest
     steps:
       - name: Code Checkout
@@ -43,8 +43,8 @@ jobs:
       - name: Build
         run: pnpm run build
 
-  docker-image-commit:
-    needs: prior-build
+  Docker_Image_Generate:
+    needs: Prior_Build
     runs-on: ubuntu-latest
     steps:
       - name: Code Checkout
@@ -61,13 +61,13 @@ jobs:
           docker build . --file Dockerfile --tag ${{ secrets.DOCKER_REPOSITORY }}:latest
           docker push ${{ secrets.DOCKER_REPOSITORY }}:latest
 
-  jenkins-deploy:
-    needs: [docker-image-commit, prior-build]
+  Jenkins_Deploy:
+    needs: Docker_Image_Generate
     runs-on: ubuntu-latest
     steps:
       - name: Send Trigger
         run: |
-          response=$(curl -o /dev/null -s -w "%{http_code}\n" -u ${{ secrets.JENKINS_AUTH }} -X POST "https://${{ secrets.JENKINS_REPOSITORY }}/buildWithParameters?image=${{ secrets.DOCKER_REPOSITORY }}:latest")
+          response=$(curl -o /dev/null -s -w "%{http_code}\n" -u ${{ secrets.JENKINS_AUTH }} -X POST "https://${{ secrets.JENKINS_REPOSITORY }}/buildWitheParameters?image=${{ secrets.DOCKER_REPOSITORY }}:latest")
           if [ "$response" -eq 201 ]; then
             echo "Build triggered successfully."
           else
