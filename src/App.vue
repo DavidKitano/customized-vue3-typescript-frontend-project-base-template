@@ -21,10 +21,13 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from '@/components/common/hello-world.vue'
+import ev from '@/utils/eventLoopSample'
 
 type Version = {
   version: number
 }
+
+ev()
 
 const version = ref<Date>()
 
@@ -98,3 +101,4 @@ nav {
   }
 }
 </style>
+@/utils/eventLoopSample
