@@ -11,7 +11,8 @@
       "unplugin-icons/types/vue"
     ],
     "noImplicitAny": false,
-    "ignoreDeprecations": "5.0"
+    "ignoreDeprecations": "5.0",
+    "skipLibCheck": true
   },
   "files": [],
   "references": [

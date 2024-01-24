@@ -1,42 +1,41 @@
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg?image" width="125" height="125" />
-    <Suspense>
+    <el-watermark :font="font" content="Template made by David">
+      <img alt="Vue logo" class="logo" src="@/assets/logo.svg?image" width="125" height="125" />
       <div class="wrapper">
-        <hello-world :msg="`当前版本:${version}`" />
-
+        <hello-world :msg="msg" />
         <nav>
-          <router-link to="/">Home</router-link>
-          <router-link to="/about">About</router-link>
+          <router-link to="/">首页</router-link>
+          <router-link to="/about">查看集成内容</router-link>
         </nav>
       </div>
-      <template #fallback>
-        <div>Loading...</div>
-      </template>
-    </Suspense>
+    </el-watermark>
   </header>
-
-  <router-view />
+  <el-watermark :font="font" content="Template made by David">
+    <router-view />
+  </el-watermark>
 </template>
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from '@/components/common/hello-world.vue'
 import ev from '@/utils/eventLoopSample'
+import { fetchVersionFile } from './utils/versionCheck'
 
-type Version = {
-  version: number
-}
+const font = reactive({
+  color: 'rgba(0, 0, 0, .15)'
+})
+
+const msg = ref({
+  version: new Date(''),
+  versionText: '这是一个自定义的Vue 3搭配TypeScript、Vite等的模版',
+  welcomeText: '你终于刷到我辣，现在你的身边多了一位健康的心理咨熊师'
+})
 
 ev()
 
-const version = ref<Date>()
-
-const fetchVersionFile = () => {
-  fetch('/version.json')
-    .then((res) => res.json())
-    .then((data: Version) => (version.value = new Date(data.version))) // 假设 'version.json' 在服务器的根目录
-}
-fetchVersionFile()
+onMounted(async () => {
+  msg.value.version = await fetchVersionFile()
+})
 </script>
 
 <style lang="scss" scoped>

@@ -87,6 +87,13 @@ export default defineConfig({
   },
   build: {
     sourcemap: true,
-    cssCodeSplit: false
+    cssCodeSplit: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          lodash: ['lodash']
+        }
+      }
+    }
   }
 })

@@ -1,21 +1,50 @@
 <script setup lang="ts">
+import dayjs from 'dayjs'
+
 defineProps<{
-  msg: string
+  msg: {
+    versionText: string
+    version: Date
+    welcomeText: string
+  }
 }>()
+
+const now = ref(dayjs(`${new Date()}`).format('YYYY-MM-DD HH:mm:ss'))
+let timer: any = null
+
+const updateNow = () => {
+  timer = requestAnimationFrame(() => {
+    now.value = dayjs(`${new Date()}`).format('YYYY-MM-DD HH:mm:ss')
+    updateNow()
+  })
+}
+onMounted(() => {
+  updateNow()
+})
+onUnmounted(() => {
+  if (timer) cancelAnimationFrame(timer)
+})
 </script>
 
 <template>
   <div class="greetings">
-    <h1 class="green">{{ msg }}</h1>
+    <h1 class="green">{{ msg.welcomeText }}</h1>
     <h3>
-      You’ve successfully created a project with
+      <p>{{ msg.versionText }}</p>
+      <p class="version-text">当前版本 {{ dayjs(msg.version).format('YYYY-MM-DD HH:mm:ss') }}</p>
+      <p class="version-text">现在时间 {{ now }}</p>
+      <br />
       <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
-      <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>. What's next?
+      <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>
     </h3>
   </div>
 </template>
 
 <style scoped>
+.version-text {
+  font-size: 1rem;
+}
+
 h1 {
   font-weight: 500;
   font-size: 2.6rem;

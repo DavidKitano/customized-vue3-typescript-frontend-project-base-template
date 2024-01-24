@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/home/index.vue'
+import { checkVersionUpdate } from '@/utils/versionCheck'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,6 +19,18 @@ const router = createRouter({
       component: () => import('../views/about/index.vue')
     }
   ]
+})
+
+router.beforeEach(async () => {
+  const res = await checkVersionUpdate()
+  if (res) {
+    ElMessageBox.alert('检测到新版本', '通知', {
+      confirmButtonText: '了解'
+    }).then(() => {
+      window.location.reload()
+      return true
+    })
+  }
 })
 
 export default router

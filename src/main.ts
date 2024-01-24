@@ -3,10 +3,10 @@ import 'normalize.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import _ from 'lodash'
-import ElementPlus from 'element-plus'
-import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 
+// import ElementPlus from 'element-plus'
+// import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
+import _ from 'lodash-es'
 import App from './App.vue'
 import router from './router'
 
@@ -24,9 +24,8 @@ const pinia = createPinia()
 
 app.use(pinia)
 app.use(router)
-app.use(_)
-app.use(ElementPlus, {
-  locale: zhCn
-})
+// app.use(ElementPlus, {
+//   locale: zhCn
+// })
 
 app.mount('#app')

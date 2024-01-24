@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ElWatermark: typeof import('element-plus/es')['ElWatermark']
     HelloWorld: typeof import('./components/common/hello-world.vue')['default']
     IconCommunity: typeof import('./components/icons/icon-community.vue')['default']
     IconDocumentation: typeof import('./components/icons/icon-documentation.vue')['default']

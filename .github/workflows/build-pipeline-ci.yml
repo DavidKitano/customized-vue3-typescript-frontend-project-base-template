@@ -2,8 +2,6 @@ name: Docker-Image-Build-Pipeline
 
 on:
   push:
-    branches:
-      - main
     tags:
       - 'v*'
 
@@ -67,7 +65,7 @@ jobs:
     steps:
       - name: Send Trigger
         run: |
-          response=$(curl -o /dev/null -s -w "%{http_code}\n" -u ${{ secrets.JENKINS_AUTH }} -X POST "https://${{ secrets.JENKINS_REPOSITORY }}/buildWitheParameters?image=${{ secrets.DOCKER_REPOSITORY }}:latest")
+          response=$(curl -o /dev/null -s -w "%{http_code}\n" -u ${{ secrets.JENKINS_AUTH }} -X POST "https://${{ secrets.JENKINS_REPOSITORY }}/buildWithParameters?image=${{ secrets.DOCKER_REPOSITORY }}:latest")
           if [ "$response" -eq 201 ]; then
             echo "Build triggered successfully."
           else

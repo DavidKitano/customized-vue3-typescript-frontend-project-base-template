@@ -50,6 +50,8 @@ nocheck
 
 unplugin
 
+iconify
+
 
 ## 缩写词
 btn # button
