@@ -1,11 +1,14 @@
 import router from '@/router'
 import { auth, clearAuth } from '@/stores/common/auth'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { ElMessage, ElNotification } from 'element-plus'
 
 export type Response<T> = Promise<[boolean, T]>
 type ErrorCodeMap = {
   [key: number]: { title: string; message: string }
+}
+type AxiosErrorCodeMap = {
+  [key: string]: string
 }
 
 const errorCodeMap: ErrorCodeMap = {
@@ -37,6 +40,21 @@ const errorCodeMap: ErrorCodeMap = {
   502: { title: '502 Bad Gateway', message: '网关错误，请稍后刷新试试' },
   503: { title: '503 Service Unavailable', message: '服务器暂时无法处理请求，请稍后刷新试试' },
   504: { title: '504 Gateway Timeout', message: '网关超时，请稍后刷新试试' }
+}
+const axiosCodeMap: AxiosErrorCodeMap = {
+  ERR_FR_TOO_MANY_REDIRECTS: '重定向次数过多，请稍候刷新页面后重试',
+  ERR_BAD_OPTION_VALUE: '选项值错误，请联系研发人员确认',
+  ERR_BAD_OPTION: '选项错误，请联系研发人员确认',
+  ERR_NETWORK: '网络错误，请检查网络连接后重试',
+  ERR_DEPRECATED: '已弃用，请联系研发人员确认',
+  ERR_BAD_RESPONSE: '响应错误，请联系研发人员确认',
+  ERR_BAD_REQUEST: '请求错误，请联系研发人员确认',
+  ERR_NOT_SUPPORT: '不支持的操作，请检查操作或联系研发人员确认',
+  ERR_INVALID_URL: '访问链接无效，请联系研发人员确认',
+  ERR_CANCELED: '操作已取消',
+  ECONNABORTED: '连接中止，请检查网络连接后重试',
+  ETIMEDOUT: '连接超时，请检查网络连接后重试',
+  ERR_UNKNOWN: '未知错误，请联系研发人员确认'
 }
 const errorNotification = (status: number) => {
   let title: string = `${String(status)} Error`
@@ -89,6 +107,11 @@ api.interceptors.response.use(
     return Promise.resolve([response.data.code !== 0, response.data])
   },
   (error: any) => {
+    if (error instanceof AxiosError) {
+      const _code = error.code || 'ERR_UNKNOWN'
+      return Promise.resolve([true, { message: axiosCodeMap[_code] }])
+    }
+
     if (!error || !error.response) return Promise.resolve([true, {}])
 
     if (error.response.status === 401) {
