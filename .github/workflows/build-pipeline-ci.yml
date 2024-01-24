@@ -2,6 +2,8 @@ name: Docker-Image-Build-Pipeline
 
 on:
   push:
+    branches:
+      - main
     tags:
       - 'v*'
 
@@ -58,3 +60,17 @@ jobs:
           echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
           docker build . --file Dockerfile --tag ${{ secrets.DOCKER_REPOSITORY }}:latest
           docker push ${{ secrets.DOCKER_REPOSITORY }}:latest
+
+  jenkins-deploy:
+    needs: [docker-image-commit, prior-build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Trigger
+        run: |
+          response=$(curl -o /dev/null -s -w "%{http_code}\n" -u ${{ secrets.JENKINS_AUTH }} -X POST "https://${{ secrets.JENKINS_REPOSITORY }}/buildWithParameters?image=${{ secrets.DOCKER_REPOSITORY }}:latest")
+          if [ "$response" -eq 201 ]; then
+            echo "Build triggered successfully."
+          else
+            echo "Failed to trigger build. HTTP Status: $response"
+            exit 1
+          fi
