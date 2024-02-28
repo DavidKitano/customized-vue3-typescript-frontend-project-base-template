@@ -1,0 +1,9 @@
+{
+  "plugins": {
+    "autoprefixer": {
+      "overrideBrowserslist": [
+        "last 10 versions"
+      ]
+    }
+  }
+}

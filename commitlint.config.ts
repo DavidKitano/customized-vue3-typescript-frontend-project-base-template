@@ -23,7 +23,12 @@ const Configuration: UserConfig = {
   extends: ['@commitlint/config-conventional'],
   rules: {
     'type-enum': [RuleConfigSeverity.Error, 'always', acceptedTypes],
-    'type-case': [RuleConfigSeverity.Error, 'always', ['lower-case']]
+    'type-case': [RuleConfigSeverity.Error, 'always', 'lower-case'],
+    'subject-case': [
+      RuleConfigSeverity.Error,
+      'always',
+      ['sentence-case', 'start-case', 'pascal-case', 'upper-case', 'lower-case']
+    ]
   },
   helpUrl: '\n\thttps://commitlint.js.org/\n\thttps://github.com/conventional-changelog/commitlint/#what-is-commitlint',
   ignores: [

@@ -6,11 +6,34 @@
 
 !bable # babel
 
+!depandence # dependence
+
+!dependance
+
+!depandance 
+
+!Depandence
+
+!Depandance
+
+!Dependance
+
+!DEPANDENCE
+
+!DEPANDANCE
+
+!DEPENDANCE
+
+!diasble # disable
+
 !choosed # chosen
 
-!programe # program
+!programe # program? programme?
+
+!defualt # default
 
 
+# 允许词
 ## 开发术语
 cascader
 
@@ -24,17 +47,19 @@ datetime
 
 datetimerange
 
+dsn # Sentry相关
+
 dylib
 
 pinia
 
 vetur
 
-vuejs
-
 vscode
 
 vueuse
+
+nprogress
 
 moduler
 
@@ -46,11 +71,15 @@ nofullscreen
 
 noremoteplayback
 
-nocheck
+rbac
 
-unplugin
+apifox
 
-iconify
+echarts # 图表库
+
+echart
+
+commitlint
 
 
 ## 缩写词
