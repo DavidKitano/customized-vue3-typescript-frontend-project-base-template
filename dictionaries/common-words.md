@@ -81,6 +81,10 @@ echart
 
 commitlint
 
+iconify
+
+vuejs
+
 
 ## 缩写词
 btn # button
